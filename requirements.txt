@@ -4,3 +4,4 @@ seaborn
 geopandas
 pandas
 streamlit
+plotly
