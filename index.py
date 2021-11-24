@@ -42,16 +42,16 @@ st.sidebar.write("""
 
 date = st.sidebar.selectbox(
     "Choisissez votre jour:", routes_cleaned['route_date'].unique()[::-1])
-warehouse = st.sidebar.multiselect("Choisissez votre warehouse:", routes_cleaned['from_warehouse'].unique(
+warehouse = st.sidebar.multiselect("Choisissez vos entrepôts:", routes_cleaned['from_warehouse'].unique(
 ), default=routes_cleaned['from_warehouse'].unique())
 
 col1sb, col2sb, col3sb = st.sidebar.columns(3)
 lever1 = col1sb.select_slider(
-    "Levier 1", ['Off', 'On'], key=1, format_func=lambda x: 'On' if x == 'On' else '')
+    "🚦", ['Off', 'On'], key=1, format_func=lambda x: 'On' if x == 'On' else '')
 lever2 = col2sb.select_slider(
-    "Levier 2", ['Off', 'On'], key=2, format_func=lambda x: 'On' if x == 'On' else '')
+    "🚚", ['Off', 'On'], key=2, format_func=lambda x: 'On' if x == 'On' else '')
 lever3 = col3sb.select_slider(
-    "Levier 3", ['Off', 'On'], key=3, format_func=lambda x: 'On' if x == 'On' else '')
+    "🔋", ['Off', 'On'], key=3, format_func=lambda x: 'On' if x == 'On' else '')
 
 #lever1 = st.sidebar.select_slider("Levier 1",['On','Off'])
 #lever2 = st.sidebar.select_slider("Levier 1",['On','Off'])
@@ -78,11 +78,15 @@ bilan_carbone_filtered_d1 = bilan_carbone_journee(
 st.write("## KPIs")
 col1, col2, col3 = st.columns(3)
 col1.metric("Bilan Carbone", f"{int(bilan_carbone_filtered.valeur.sum()/1000)} tCO2e",
-            f"{pourcent(bilan_carbone_filtered.valeur.sum(),bilan_carbone_filtered_d1.valeur.sum())} % day-to-day")
+            f"{pourcent(bilan_carbone_filtered.valeur.sum(),bilan_carbone_filtered_d1.valeur.sum())} % day-to-day", delta_color="inverse")
 
 col2.metric("# de camions", f"{len(trucks_filtered)}")
 col3.metric("# de routes", len(routes_cleaned_filtered),
-            f"{len(routes_cleaned_filtered) - len(routes_cleaned_filtered_d1)} day-to-day")
+            f"{len(routes_cleaned_filtered) - len(routes_cleaned_filtered_d1)} day-to-day", delta_color="inverse")
+
+"""
+---
+"""
 
 col21, col22 = st.columns(2)
 col21.write("## Bilan carbone")
