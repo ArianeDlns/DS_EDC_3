@@ -177,3 +177,27 @@ def chart_carbon(df):
     fig.update_traces(hoverinfo='label+value', textinfo='percent', textfont_size=20,
                       marker=dict(colors=px.colors.sequential.algae, line=dict(color='#FFFFFF', width=2)))
     return fig
+
+
+def waterfall_CO2(values):
+    fig = go.Figure(go.Waterfall(
+        name="20", orientation="v",
+        measure=['relative', "relative", "total",
+                 "relative", "total", "relative", "total"],
+        x=["Bilan initial", "🚦 Optimisation des routes", "Net après optimisation",
+            "🚚 Dimensionnement des camions", 'Net après dimensionnement', "🔋 Flotte électrique", "Net après flotte électrique"],
+        textposition="outside",
+        #text=["+60", "+80", "", "-40", "-20", '-20', "Total"],
+        y=values,
+        connector={"line": {"color": "rgb(63, 63, 63)"}},
+        decreasing={"marker": {"color": "#006400"}},
+        increasing={"marker": {"color": "Maroon"}},
+        totals={"marker": {"color": "darkblue"}}
+    ))
+
+    fig.update_layout(
+        title=f"Bilan carbon {'date'} ",
+        showlegend=False,
+        plot_bgcolor='rgba(0,0,0,0)')
+
+    return fig

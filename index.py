@@ -1,16 +1,25 @@
+from numpy import int32
 import streamlit as st
 import datetime
 import pandas as pd
+from plotly_chart import route_chart, routes_per_day, chart_carbon, waterfall_CO2
 from preprocessing import clean_packages, clean_routes, adding_factors
-from plotly_chart import route_chart, routes_per_day, chart_carbon
+from cout_carbone import bilan_carbone_journee, levers_computing
 from helpers import add_days, pourcent
-from cout_carbone import bilan_carbone_journee
 
 
 @st.cache
 def load_data(path):
     data = pd.read_csv(path)
     return data
+
+
+@st.cache
+def cleaning(packages, pricing, routes, factors):
+    packages_cleaned = clean_packages(packages, pricing)
+    routes_cleaned = clean_routes(routes)
+    factors = adding_factors(factors)
+    return packages_cleaned, routes_cleaned, factors
 
 
 cities = load_data("data/cities.csv")
@@ -22,20 +31,15 @@ routes = load_data("data/routes_v2.csv")
 trucks = load_data("data/trucks.csv")
 warehouses = load_data("data/warehouses.csv")
 
-packages_cleaned = clean_packages(packages, pricing)
-routes_cleaned = clean_routes(routes)
-factors = adding_factors(factors)
+packages_cleaned, routes_cleaned, factors = cleaning(
+    packages, pricing, routes, factors)
 
-# st.image("https://www.transformative-mobility.org/assets/site/events/COP26.PNG")
-# st.sidebar.image("https://images.caradisiac.com/logos/3/9/2/9/263929/S7-camions-la-fin-du-diesel-des-2040-187102.jpg")
-st.sidebar.image("http://lespopines.l.e.pic.centerblog.net/b6e74644.gif")
 
 # ----------------------------------------------------------------------------------------------------------------------
 # SIDEBAR
 # ----------------------------------------------------------------------------------------------------------------------
 
-
-#st.sidebar.image("./img/logo_cop2.png",width = 150)
+st.sidebar.image("http://lespopines.l.e.pic.centerblog.net/b6e74644.gif")
 st.sidebar.write("""
 # LPD Dashboard
 """)
@@ -53,12 +57,12 @@ lever2 = col2sb.select_slider(
 lever3 = col3sb.select_slider(
     "🔋", ['Off', 'On'], key=3, format_func=lambda x: 'On' if x == 'On' else '')
 
-#lever1 = st.sidebar.select_slider("Levier 1",['On','Off'])
-#lever2 = st.sidebar.select_slider("Levier 1",['On','Off'])
-#lever3 = st.sidebar.select_slider("Levier 3",['On','Off'])
+levers = [lever1, lever2, lever3]
 
+# ----------------------------------------------------------------------------------------------------------------------
+# UPDATING DATA
+# ----------------------------------------------------------------------------------------------------------------------
 
-# Updating database
 routes_cleaned_filtered = routes_cleaned[(routes_cleaned['route_date'] == date) & (
     routes_cleaned['from_warehouse'].isin(warehouse))]
 trucks_filtered = trucks[trucks['truck_warehouse'].isin(warehouse)]
@@ -71,13 +75,44 @@ routes_cleaned_filtered_d1 = routes_cleaned[(routes_cleaned['route_date'] == dat
 bilan_carbone_filtered_d1 = bilan_carbone_journee(
     routes_cleaned_filtered_d1, factors, trucks_filtered)
 
+routes_levers = routes_cleaned_filtered
+trucks_levers = trucks_filtered
+bilan_carbone_levers = bilan_carbone_filtered
 
 # ----------------------------------------------------------------------------------------------------------------------
 # USAGE
 # ----------------------------------------------------------------------------------------------------------------------
+
+if 'On' in levers:
+    bilan_carbon_full = bilan_carbone_filtered.valeur.sum()/1000
+    values = [bilan_carbon_full, -bilan_carbon_full*0.19,0,-bilan_carbon_full*0.06,0,-bilan_carbon_full*0.24,0]
+    impact_lever1 = values[1] if lever1=='On' else 0
+    impact_lever2 = values[3] if lever2=='On' else 0
+    impact_lever3 = values[5] if lever3=='On' else 0
+    full_values = [bilan_carbon_full, impact_lever1 ,0, impact_lever2 ,0, impact_lever3, 0]
+
+    st.write("## Impact des leviers")
+    st.metric('Gain Carbon sur la journée',
+              f'{-int(impact_lever1+impact_lever2+impact_lever3)} tCO2e', f'{int32((impact_lever1+impact_lever2+impact_lever3)/bilan_carbon_full*100)} %', delta_color="inverse")
+ 
+    col1l, col2l, col3l = st.columns(3)
+    col1l.metric("🚦 Optimisation des routes", f"{-int(impact_lever1)} tCO2e",
+                  delta_color="inverse")
+
+    col2l.metric("🚚 Dimensionnement des camions",
+                 f"{-int(impact_lever2)} tCO2e")
+    col3l.metric("🔋 Flotte électrique", f"{-int(impact_lever3)} tCO2e",
+                 delta_color="inverse")
+
+    st.plotly_chart(waterfall_CO2(full_values))
+
+"""
+---
+"""
+
 st.write("## KPIs")
 col1, col2, col3 = st.columns(3)
-col1.metric("Bilan Carbone", f"{int(bilan_carbone_filtered.valeur.sum()/1000)} tCO2e",
+col1.metric("Bilan carbone", f"{int(bilan_carbone_filtered.valeur.sum()/1000)} tCO2e",
             f"{pourcent(bilan_carbone_filtered.valeur.sum(),bilan_carbone_filtered_d1.valeur.sum())} % day-to-day", delta_color="inverse")
 
 col2.metric("# de camions", f"{len(trucks_filtered)}")
@@ -88,15 +123,12 @@ col3.metric("# de routes", len(routes_cleaned_filtered),
 ---
 """
 
-col21, col22 = st.columns(2)
-col21.write("## Bilan carbone")
-col21.plotly_chart(chart_carbon(bilan_carbone_filtered),
-                   use_container_width=True)
+if 'On' not in levers:
+    col21, col22 = st.columns(2)
+    col21.write("## Bilan carbone")
+    col21.plotly_chart(chart_carbon(bilan_carbone_filtered),
+                    use_container_width=True)
 
-col22.write("## Routes")
-col22.plotly_chart(routes_per_day(routes_cleaned[routes_cleaned['from_warehouse'].isin(
-    warehouse)], date, cities), use_container_width=True)
-
-#st.write("*For now analyses are done live every day, a summarization of all analyses will be done at the end of the conference*")
-
-# st.write("## Highlights")
+    col22.write("## Routes")
+    col22.plotly_chart(routes_per_day(routes_cleaned[routes_cleaned['from_warehouse'].isin(
+        warehouse)], date, cities), use_container_width=True)

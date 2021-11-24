@@ -26,3 +26,6 @@ def bilan_carbone_journee(route,factors,trucks):
     df = pd.DataFrame([carbon_route,carbon_stockage,carbon_amortissement], index=[['Utilisation des camions','Production des camions stockés','Production des camions utilisés']], columns=['valeur'])
     df = df.reset_index()
     return df
+
+def levers_computing():
+    pass
