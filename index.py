@@ -34,9 +34,21 @@ st.sidebar.write("""
 # LPD Dashboard
 """)
 
-st.sidebar.write("""##### Table of contents
-1. [Choix du jour](#choix-du-jour)
-2. [Data Analysis](#data-analysis)
+date = st.sidebar.selectbox("Choisissez votre jour:",routes_cleaned['route_date'].unique())
+
+col1sb, col2sb, col3sb = st.sidebar.columns(3)
+lever1 = col1sb.select_slider("Levier 1",['Off','On'], key=1, format_func=lambda x: 'On' if x=='On' else '')
+lever2 = col2sb.select_slider("Levier 2",['Off','On'], key=2, format_func=lambda x: 'On' if x=='On' else '')
+lever3 = col3sb.select_slider("Levier 3",['Off','On'], key=3, format_func=lambda x: 'On' if x=='On' else '')
+
+#lever1 = st.sidebar.select_slider("Levier 1",['On','Off'])
+#lever2 = st.sidebar.select_slider("Levier 1",['On','Off'])
+#lever3 = st.sidebar.select_slider("Levier 3",['On','Off'])
+
+st.sidebar.write("""##### Sommaire
+1. [KPIs](#kpis)
+2. [Bilan Carbone](#detail-du-bilan-carbone)
+3. [Routes](#routes)
 """)
 
 
@@ -60,22 +72,20 @@ st.sidebar.write("""##### Table of contents
 # USAGE
 #----------------------------------------------------------------------------------------------------------------------
 
+st.write("## KPIs")
+col1, col2, col3 = st.columns(3)
+col1.metric("Bilan Carbone", "14 ktCO2e", "-8%")
+col2.metric("# de packets", "4 200", "+3%")
+col3.metric("# de routes", "42", "-2%")
 
+st.write("## Detail du bilan carbone")
+st.info('WIP')
 
-st.write("## Choix du jour")
-date = st.selectbox("Choisissez votre jour:",routes_cleaned['route_date'].unique())
-
+st.write("## Routes")
 #st.plotly_chart(route_chart(orders,cities))
-st.plotly_chart(routes_per_day(routes_cleaned,date,cities))
+st.plotly_chart(routes_per_day(routes_cleaned,date,cities), use_container_width=True)
 
 #st.write("*For now analyses are done live every day, a summarization of all analyses will be done at the end of the conference*")
 
 #st.write("## Highlights")
 
-
-st.write("## Data Analysis")
-st.info("WIP")
-col1, col2, col3 = st.columns(3)
-col1.metric("# of tweets", "70 °F", "1.2 °F")
-col2.metric("# of likes", "70 °F", "1.2 °F")
-col3.metric("Temperature", "70 °F", "1.2 °F")
