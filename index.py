@@ -49,6 +49,9 @@ date = st.sidebar.selectbox(
 warehouse = st.sidebar.multiselect("Choisissez vos entrepôts:", routes_cleaned['from_warehouse'].unique(
 ), default=routes_cleaned['from_warehouse'].unique())
 
+st.sidebar.write("""
+## Leviers stratégiques
+""")
 col1sb, col2sb, col3sb = st.sidebar.columns(3)
 lever1 = col1sb.select_slider(
     "🚦", ['Off', 'On'], key=1, format_func=lambda x: 'On' if x == 'On' else '')
