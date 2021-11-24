@@ -20,3 +20,8 @@ def tri_2_arg(list):
     random.shuffle(list)
     return sorted(list, key = lambda x: x[1])
 
+def color_per_reseau(warehouse):
+    colors = {"Cergy":"rgb(42,56,86)","Clermont-Ferrand":"rgb(199,59,71)",
+              "Montauban":"rgb(89,112,115)","Reims":"rgb(182,217,219)",
+              "Avignon":"rgb(199,59,71)"}
+    return colors[warehouse]
