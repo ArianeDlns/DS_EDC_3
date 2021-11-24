@@ -2,6 +2,8 @@
 
 import pandas as pd
 import random
+from dateutil.relativedelta import relativedelta
+from datetime import datetime
 
 def process_remove_outliers_quartile(df: pd.DataFrame) -> pd.DataFrame:
     """Remove outliers outside 1.5 IQR"""
@@ -25,3 +27,18 @@ def color_per_reseau(warehouse):
               "Montauban":"rgb(89,112,115)","Reims":"rgb(182,217,219)",
               "Avignon":"rgb(199,59,71)"}
     return colors[warehouse]
+
+def add_days(date,days,dtype='datetime'):
+    try:
+        if dtype == 'str':
+            return datetime.strftime(datetime.strptime(date, "%Y-%m-%d") + relativedelta(days = days), "%Y-%m-%d")
+        else:
+            return datetime.strptime(date, "%Y-%m-%d") + relativedelta(days = days)
+    except TypeError:
+        if dtype == 'str':
+            return datetime.strftime(date + relativedelta(days = days), "%Y-%m-%d")
+        else:
+            return date + relativedelta(days = days)
+
+def pourcent(x1,x2):
+    return int((x1-x2)/x2 *100)

@@ -1,13 +1,17 @@
 import streamlit as st
 import datetime
 import pandas as pd
-from preprocessing import clean_packages,clean_routes
-from plotly_chart import route_chart,routes_per_day
+from preprocessing import clean_packages, clean_routes, adding_factors
+from plotly_chart import route_chart, routes_per_day, chart_carbon
+from helpers import add_days, pourcent
+from cout_carbone import bilan_carbone_journee
+
 
 @st.cache
 def load_data(path):
-   data = pd.read_csv(path)
-   return data
+    data = pd.read_csv(path)
+    return data
+
 
 cities = load_data("data/cities.csv")
 factors = load_data("data/factors.csv")
@@ -18,15 +22,17 @@ routes = load_data("data/routes_v2.csv")
 trucks = load_data("data/trucks.csv")
 warehouses = load_data("data/warehouses.csv")
 
-packages_cleaned = clean_packages(packages,pricing)
+packages_cleaned = clean_packages(packages, pricing)
 routes_cleaned = clean_routes(routes)
+factors = adding_factors(factors)
 
 # st.image("https://www.transformative-mobility.org/assets/site/events/COP26.PNG")
-st.sidebar.image("https://images.caradisiac.com/logos/3/9/2/9/263929/S7-camions-la-fin-du-diesel-des-2040-187102.jpg")
+# st.sidebar.image("https://images.caradisiac.com/logos/3/9/2/9/263929/S7-camions-la-fin-du-diesel-des-2040-187102.jpg")
+st.sidebar.image("http://lespopines.l.e.pic.centerblog.net/b6e74644.gif")
 
-#----------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 # SIDEBAR
-#----------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 
 
 #st.sidebar.image("./img/logo_cop2.png",width = 150)
@@ -34,58 +40,59 @@ st.sidebar.write("""
 # LPD Dashboard
 """)
 
-date = st.sidebar.selectbox("Choisissez votre jour:",routes_cleaned['route_date'].unique())
+date = st.sidebar.selectbox(
+    "Choisissez votre jour:", routes_cleaned['route_date'].unique()[::-1])
+warehouse = st.sidebar.multiselect("Choisissez votre warehouse:", routes_cleaned['from_warehouse'].unique(
+), default=routes_cleaned['from_warehouse'].unique())
 
 col1sb, col2sb, col3sb = st.sidebar.columns(3)
-lever1 = col1sb.select_slider("Levier 1",['Off','On'], key=1, format_func=lambda x: 'On' if x=='On' else '')
-lever2 = col2sb.select_slider("Levier 2",['Off','On'], key=2, format_func=lambda x: 'On' if x=='On' else '')
-lever3 = col3sb.select_slider("Levier 3",['Off','On'], key=3, format_func=lambda x: 'On' if x=='On' else '')
+lever1 = col1sb.select_slider(
+    "Levier 1", ['Off', 'On'], key=1, format_func=lambda x: 'On' if x == 'On' else '')
+lever2 = col2sb.select_slider(
+    "Levier 2", ['Off', 'On'], key=2, format_func=lambda x: 'On' if x == 'On' else '')
+lever3 = col3sb.select_slider(
+    "Levier 3", ['Off', 'On'], key=3, format_func=lambda x: 'On' if x == 'On' else '')
 
 #lever1 = st.sidebar.select_slider("Levier 1",['On','Off'])
 #lever2 = st.sidebar.select_slider("Levier 1",['On','Off'])
 #lever3 = st.sidebar.select_slider("Levier 3",['On','Off'])
 
-st.sidebar.write("""##### Sommaire
-1. [KPIs](#kpis)
-2. [Bilan Carbone](#detail-du-bilan-carbone)
-3. [Routes](#routes)
-""")
+
+# Updating database
+routes_cleaned_filtered = routes_cleaned[(routes_cleaned['route_date'] == date) & (
+    routes_cleaned['from_warehouse'].isin(warehouse))]
+trucks_filtered = trucks[trucks['truck_warehouse'].isin(warehouse)]
+bilan_carbone_filtered = bilan_carbone_journee(
+    routes_cleaned_filtered, factors, trucks_filtered)
+
+date_d1 = add_days(date, -1, dtype='str')
+routes_cleaned_filtered_d1 = routes_cleaned[(routes_cleaned['route_date'] == date_d1) & (
+    routes_cleaned['from_warehouse'].isin(warehouse))]
+bilan_carbone_filtered_d1 = bilan_carbone_journee(
+    routes_cleaned_filtered_d1, factors, trucks_filtered)
 
 
-# st.sidebar.write("""
-# ## Author
-# Work done by [Théo Alves Da Costa](https://www.linkedin.com/in/th%C3%A9o-alves-da-costa-09397a82/).
-# Head of AI for Sustainability at [Ekimetrics](https://ekimetrics.com/) & Co-Lead for the NGO [Data For Good](https://dataforgood.fr/).
-# I am present at the COP26 from the 4th to the 12th, if you want to meet in person. 
-# - Code for the platform is open sourced on [Github](https://github.com/TheoLvs/cop26radar)
-# - Contact by mail [here](mailto:theo.alvesdacosta@ekimetrics.com)
-# ## Methodology
-# For developers - analysis are done on Twitter data using Python, Flashtext, Hugging Face pretrained Transformers models from Cardiff University, BERTopic, langdetect, VADER.
-# *Work in progress - Detailed methodology article and open source code soon available* 
-# ## AI Carbon Footprint
-# Artificial intelligence can consume a lot of energy, so special attention was paid to reduce the carbon footprint of the analyses: no cloud platform was used - performed on a simple laptop, the computing is done asynchronously to avoid multiplying requests and live calculations.
-# Moreover, the carbon footprint was measured with the [CodeCarbon](https://github.com/mlco2/codecarbon) tool developed by the MILA University.
-# """)
-
-
-#----------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 # USAGE
-#----------------------------------------------------------------------------------------------------------------------
-
+# ----------------------------------------------------------------------------------------------------------------------
 st.write("## KPIs")
 col1, col2, col3 = st.columns(3)
-col1.metric("Bilan Carbone", "14 ktCO2e", "-8%")
-col2.metric("# de packets", "4 200", "+3%")
-col3.metric("# de routes", "42", "-2%")
+col1.metric("Bilan Carbone", f"{int(bilan_carbone_filtered.valeur.sum()/1000)} tCO2e",
+            f"{pourcent(bilan_carbone_filtered.valeur.sum(),bilan_carbone_filtered_d1.valeur.sum())} % day-to-day")
 
-st.write("## Detail du bilan carbone")
-st.info('WIP')
+col2.metric("# de camions", f"{len(trucks_filtered)}")
+col3.metric("# de routes", len(routes_cleaned_filtered),
+            f"{len(routes_cleaned_filtered) - len(routes_cleaned_filtered_d1)} day-to-day")
 
-st.write("## Routes")
-#st.plotly_chart(route_chart(orders,cities))
-st.plotly_chart(routes_per_day(routes_cleaned,date,cities), use_container_width=True)
+col21, col22 = st.columns(2)
+col21.write("## Bilan carbone")
+col21.plotly_chart(chart_carbon(bilan_carbone_filtered),
+                   use_container_width=True)
+
+col22.write("## Routes")
+col22.plotly_chart(routes_per_day(routes_cleaned[routes_cleaned['from_warehouse'].isin(
+    warehouse)], date, cities), use_container_width=True)
 
 #st.write("*For now analyses are done live every day, a summarization of all analyses will be done at the end of the conference*")
 
-#st.write("## Highlights")
-
+# st.write("## Highlights")

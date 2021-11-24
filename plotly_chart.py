@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.graph_objects as go
+import plotly.express as px
 from urllib.request import urlopen
 import json
 import geopandas as gpd
@@ -79,6 +80,7 @@ def routes_per_day(routes_cleaned,random_date,cities):
         geo_data = pd.DataFrame(gpd.GeoDataFrame(french_counties['features'])['properties'].tolist())
         geo_data['value']= 1
 
+    routes_cleaned = routes_cleaned.reset_index()
     used_tracks = []
     for i in range(len(routes_cleaned)):
         for j in range(len(routes_cleaned.stops[i])-1):
@@ -140,8 +142,21 @@ def routes_per_day(routes_cleaned,random_date,cities):
                     bgcolor= 'rgba(0,0,0,0)')
 
     fig.update_layout(
-            title = f'Routes on the {random_date}',
             geo_scope='europe',
             margin=dict(l=10, r=10, t=45, b=20),
+        )
+    return fig
+
+def chart_carbon(df):
+    """Created the pie chart with carbon emissions"""
+    fig = go.Figure(data=[go.Pie(labels=df.level_0, values=df.valeur, hole=.3, pull=[0, 0, 0.2]) ])
+    fig.update_layout(
+            margin=dict(l=10, r=10, t=45, b=20),
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                #y=1.02,
+                xanchor="right",
+                x=1)
         )
     return fig

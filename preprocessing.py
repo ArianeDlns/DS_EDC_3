@@ -26,3 +26,10 @@ def clean_routes(routes):
     #Filling with average speed for over 120*duration distance
     routes_cleaned['total_distance'] = routes_cleaned.apply(lambda x: x.duration*100  if  x.total_distance > x.duration*120 else x.total_distance, axis=1 )
     return routes_cleaned
+
+def adding_factors(factors):
+    factors = factors.set_index('name')
+    factors.loc['CO2_t.km'] = [0.092, 'kg/t.km de CO2 rejeté par la conduite d\'un ensemble articulé de 90m3']
+    factors.loc['CO2_fab_km'] = [0.110, 'kg/km de CO2 rejeté par la fabrication d\'un ensemble articulé de 90m3']
+    factors.loc['CO2_fab'] = [82500, 'kg de CO2 rejeté par la fabrication d\'un ensemble articulé de 90m3 dans son ensemble']
+    return factors
