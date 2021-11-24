@@ -1,0 +1,101 @@
+city,lat,lng,country,iso2,admin_name,capital,population,population_proper,is_warehouse
+Paris,48.8566,2.3522,France,FR,Île-de-France,primary,11020000.0,2148271.0,False
+Nice,43.7034,7.2663,France,FR,Provence-Alpes-Côte d’Azur,minor,1006402.0,341032.0,False
+Toulouse,43.6045,1.444,France,FR,Occitanie,admin,968638.0,486828.0,False
+Marseille,43.2964,5.37,France,FR,Provence-Alpes-Côte d’Azur,admin,870018.0,868277.0,False
+Rennes,48.1147,-1.6794,France,FR,Bretagne,admin,727357.0,217728.0,False
+Grenoble,45.1715,5.7224,France,FR,Auvergne-Rhône-Alpes,minor,687985.0,157650.0,False
+Nantes,47.2181,-1.5528,France,FR,Pays de la Loire,admin,633690.0,314138.0,False
+Montpellier,43.6119,3.8772,France,FR,Occitanie,minor,607896.0,290053.0,False
+Lyon,45.76,4.84,France,FR,Auvergne-Rhône-Alpes,admin,516092.0,516092.0,False
+Rouen,49.4428,1.0886,France,FR,Normandie,admin,494382.0,111360.0,False
+Strasbourg,48.5833,7.7458,France,FR,Grand Est,admin,465069.0,284677.0,False
+Nancy,48.6936,6.1846,France,FR,Grand Est,minor,434565.0,104885.0,False
+Metz,49.1203,6.1778,France,FR,Grand Est,minor,391187.0,116581.0,False
+Brest,48.39,-4.49,France,FR,Bretagne,minor,300300.0,139602.0,False
+Mulhouse,47.75,7.34,France,FR,Grand Est,minor,285121.0,108942.0,False
+Limoges,45.8353,1.2625,France,FR,Nouvelle-Aquitaine,minor,283823.0,131479.0,False
+Orléans,47.9025,1.909,France,FR,Centre-Val de Loire,admin,282828.0,116238.0,False
+Bordeaux,44.84,-0.58,France,FR,Nouvelle-Aquitaine,admin,257804.0,257068.0,False
+Le Havre,49.49,0.1,France,FR,Normandie,minor,235218.0,169733.0,False
+Lille,50.6278,3.0583,France,FR,Hauts-de-France,admin,232787.0,232787.0,False
+Reims,49.2628,4.0347,France,FR,Grand Est,minor,182460.0,182211.0,True
+Saint-Étienne,45.4347,4.3903,France,FR,Auvergne-Rhône-Alpes,minor,172565.0,172565.0,False
+Toulon,43.1258,5.9306,France,FR,Provence-Alpes-Côte d’Azur,minor,171953.0,171953.0,False
+Dijon,47.3167,5.0167,France,FR,Bourgogne-Franche-Comté,admin,156920.0,156854.0,False
+Angers,47.4736,-0.5542,France,FR,Pays de la Loire,minor,152960.0,152960.0,False
+Nîmes,43.838,4.361,France,FR,Occitanie,minor,151001.0,149633.0,False
+Villeurbanne,45.7667,4.8803,France,FR,Auvergne-Rhône-Alpes,,147712.0,147712.0,False
+Clermont-Ferrand,45.7831,3.0824,France,FR,Auvergne-Rhône-Alpes,minor,143886.0,143886.0,True
+Le Mans,48.0077,0.1984,France,FR,Pays de la Loire,minor,142946.0,142946.0,False
+Aix-en-Provence,43.5263,5.4454,France,FR,Provence-Alpes-Côte d’Azur,minor,142482.0,142482.0,False
+Amiens,49.892,2.299,France,FR,Hauts-de-France,minor,136105.0,133891.0,False
+Tours,47.2436,0.6892,France,FR,Centre-Val de Loire,minor,135787.0,135787.0,False
+Boulogne-sur-Mer,50.7264,1.6147,France,FR,Hauts-de-France,minor,133062.0,40664.0,False
+Annecy,45.916,6.133,France,FR,Auvergne-Rhône-Alpes,minor,126924.0,126924.0,False
+Perpignan,42.6986,2.8956,France,FR,Occitanie,minor,120158.0,119188.0,False
+Boulogne-Billancourt,48.8352,2.2409,France,FR,Île-de-France,minor,120071.0,120071.0,False
+Besançon,47.24,6.02,France,FR,Bourgogne-Franche-Comté,minor,115934.0,115934.0,False
+Belfort,47.64,6.85,France,FR,Bourgogne-Franche-Comté,minor,114445.0,46954.0,False
+Saint-Denis,48.9356,2.3539,France,FR,Île-de-France,minor,111135.0,111135.0,False
+Argenteuil,48.95,2.25,France,FR,Île-de-France,minor,110210.0,110210.0,False
+Montreuil,48.8611,2.4436,France,FR,Île-de-France,,109897.0,109897.0,False
+Caen,49.18,-0.37,France,FR,Normandie,minor,105354.0,105354.0,False
+Roubaix,50.6901,3.1817,France,FR,Hauts-de-France,,100000.0,98089.0,False
+Tourcoing,50.7239,3.1612,France,FR,Hauts-de-France,,97368.0,97368.0,False
+Nanterre,48.8988,2.1969,France,FR,Île-de-France,minor,95105.0,95105.0,False
+Avignon,43.95,4.8075,France,FR,Provence-Alpes-Côte d’Azur,minor,93671.0,91729.0,True
+Vitry-sur-Seine,48.7875,2.3928,France,FR,Île-de-France,,93557.0,93557.0,False
+Épinal,48.1744,6.4512,France,FR,Grand Est,minor,93184.0,32223.0,False
+Créteil,48.7911,2.4628,France,FR,Île-de-France,minor,90605.0,90605.0,False
+Poitiers,46.58,0.34,France,FR,Nouvelle-Aquitaine,minor,88291.0,88291.0,False
+Dunkerque,51.0383,2.3775,France,FR,Hauts-de-France,minor,87353.0,86865.0,False
+Aubervilliers,48.9131,2.3831,France,FR,Île-de-France,,86375.0,86375.0,False
+Versailles,48.8053,2.135,France,FR,Île-de-France,minor,85862.0,85205.0,False
+Aulnay-sous-Bois,48.9386,2.4906,France,FR,Île-de-France,,85740.0,85740.0,False
+Carrières-sur-Seine,48.9108,2.2889,France,FR,Île-de-France,,85191.0,15003.0,False
+Colombes,48.9236,2.2522,France,FR,Île-de-France,,85177.0,85177.0,False
+Courbevoic,48.8978,2.2531,France,FR,Île-de-France,,81719.0,81719.0,False
+Rueil-Malmaison,48.876,2.181,France,FR,Île-de-France,,78152.0,77986.0,False
+Champigny-sur-Marne,48.8172,2.5156,France,FR,Île-de-France,,77630.0,77039.0,False
+Béziers,43.3476,3.219,France,FR,Occitanie,minor,77177.0,77177.0,False
+Pau,43.3,-0.37,France,FR,Nouvelle-Aquitaine,minor,77130.0,76275.0,False
+La Rochelle,46.1591,-1.1517,France,FR,Nouvelle-Aquitaine,minor,75735.0,75735.0,False
+Saint-Maur-des-Fossés,48.7994,2.4997,France,FR,Île-de-France,,74859.0,74859.0,False
+Calais,50.9481,1.8564,France,FR,Hauts-de-France,minor,73911.0,72929.0,False
+Cannes,43.5513,7.0128,France,FR,Provence-Alpes-Côte d’Azur,,73868.0,73868.0,False
+Antibes,43.5808,7.1239,France,FR,Provence-Alpes-Côte d’Azur,,72999.0,72915.0,False
+Drancy,48.93,2.45,France,FR,Île-de-France,,71318.0,71318.0,False
+Mérignac,44.8386,-0.6436,France,FR,Nouvelle-Aquitaine,,70105.0,70105.0,False
+Saint-Nazaire,47.2806,-2.2086,France,FR,Pays de la Loire,minor,69993.0,69993.0,False
+Colmar,48.0817,7.3556,France,FR,Grand Est,minor,69105.0,68703.0,False
+Issy-les-Moulineaux,48.8239,2.27,France,FR,Île-de-France,,68451.0,68260.0,False
+Noisy-le-Grand,48.8478,2.5528,France,FR,Île-de-France,,68183.0,68126.0,False
+Courcouronnes,48.6239,2.4294,France,FR,Île-de-France,,67967.0,13490.0,False
+Vénissieux,45.6978,4.8867,France,FR,Auvergne-Rhône-Alpes,,65894.0,65894.0,False
+Cergy,49.0361,2.0631,France,FR,Île-de-France,minor,65177.0,65177.0,True
+Bourges,47.0844,2.3964,France,FR,Centre-Val de Loire,minor,64551.0,64551.0,False
+Levallois-Perret,48.895,2.2872,France,FR,Île-de-France,,64379.0,64379.0,False
+La Seyne-sur-Mer,43.1,5.883,France,FR,Provence-Alpes-Côte d’Azur,,63936.0,62888.0,False
+Pessac,44.8067,-0.6311,France,FR,Nouvelle-Aquitaine,,63808.0,63808.0,False
+Valence,44.9333,4.8917,France,FR,Auvergne-Rhône-Alpes,minor,63714.0,63714.0,False
+Quimper,47.9967,-4.0964,France,FR,Bretagne,minor,62985.0,62985.0,False
+Antony,48.7539,2.2975,France,FR,Île-de-France,minor,62570.0,62570.0,False
+Ivry-sur-Seine,48.8078,2.3747,France,FR,Île-de-France,,62052.0,62052.0,False
+Montélimar,44.5581,4.7508,France,FR,Auvergne-Rhône-Alpes,,61861.0,39415.0,False
+Troyes,48.2997,4.0792,France,FR,Grand Est,minor,61652.0,61652.0,False
+Clichy,48.9044,2.3064,France,FR,Île-de-France,,61070.0,61070.0,False
+Cherbourg,49.6333,-1.6,France,FR,Normandie,minor,60991.0,60991.0,False
+Montauban,44.0181,1.3558,France,FR,Occitanie,minor,60810.0,60810.0,True
+Neuilly-sur-Seine,48.8881,2.2686,France,FR,Île-de-France,,60361.0,59940.0,False
+Chambéry,45.57,5.9118,France,FR,Auvergne-Rhône-Alpes,minor,58919.0,58833.0,False
+Niort,46.3258,-0.4606,France,FR,Nouvelle-Aquitaine,minor,58707.0,58707.0,False
+Sarcelles,48.9956,2.3808,France,FR,Île-de-France,minor,58587.0,58587.0,False
+Pantin,48.8966,2.4017,France,FR,Île-de-France,,57482.0,57482.0,False
+Lorient,47.75,-3.36,France,FR,Bretagne,minor,57149.0,57084.0,False
+Le Blanc-Mesnil,48.9387,2.4614,France,FR,Île-de-France,,56783.0,56783.0,False
+Beauvais,49.4303,2.0952,France,FR,Hauts-de-France,minor,56020.0,56020.0,False
+Maisons-Alfort,48.8058,2.4378,France,FR,Île-de-France,,55655.0,55655.0,False
+Hyères,43.1199,6.1316,France,FR,Provence-Alpes-Côte d’Azur,,55588.0,55069.0,False
+Épinay-sur-Seine,48.9553,2.3092,France,FR,Île-de-France,,55084.0,54771.0,False
+Meaux,48.9603,2.8883,France,FR,Île-de-France,minor,54991.0,54991.0,False

@@ -1,0 +1,5 @@
+name,value,comment
+truck_volume,81.25,
+fuel_per_km,0.3,
+cost_per_liter,1.15,
+average_speed,100.0,
