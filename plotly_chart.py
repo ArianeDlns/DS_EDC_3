@@ -196,7 +196,7 @@ def waterfall_CO2(values):
     ))
 
     fig.update_layout(
-        title=f"Bilan carbon {'date'} ",
+        #title=f"Bilan carbon {'date'} ",
         showlegend=False,
         plot_bgcolor='rgba(0,0,0,0)')
 
