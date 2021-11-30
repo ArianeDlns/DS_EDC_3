@@ -2,11 +2,15 @@ from numpy import int32
 import streamlit as st
 import datetime
 import pandas as pd
-from plotly_chart import route_chart, routes_per_day, chart_carbon, waterfall_CO2
-from preprocessing import clean_packages, clean_routes, adding_factors
-from cout_carbone import bilan_carbone_journee, levers_computing
-from helpers import add_days, pourcent
+from utils.plotly_chart import route_chart, routes_per_day, chart_carbon, waterfall_CO2
+from utils.preprocessing import clean_packages, clean_routes, adding_factors
+from utils.cout_carbone import bilan_carbone_journee, levers_computing
+from utils.helpers import add_days, pourcent
 
+
+# ----------------------------------------------------------------------------------------------------------------------
+# To run locally run: 'streamlit run index.py'
+# ----------------------------------------------------------------------------------------------------------------------
 
 @st.cache
 def load_data(path):
